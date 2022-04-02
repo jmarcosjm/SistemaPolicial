@@ -1,32 +1,13 @@
 package com.gestao.sistemapolicial.controller;
 
-import lombok.AllArgsConstructor;
-
-import javax.persistence.PersistenceContext;
-import javax.persistence.EntityManager;
-
 import com.gestao.sistemapolicial.model.entity.Crime;
+import org.springframework.stereotype.Repository;
 
-import java.io.Serializable;
+@Repository
+public class CrimeDAO extends AbstractJpaDAO<Crime> {
 
-@AllArgsConstructor
-public class CrimeDAO <T extends Serializable> {
-
-    private Class<T> clazz;
-
-    @PersistenceContext
-    EntityManager entityManager;
-
-    public final void setClazz(Class<T> clazzToSet){
-        this.clazz = clazzToSet;
+    public CrimeDAO(){
+        setClazz(Crime.class);
     }
 
-    public T findByCpf(String cpf) {
-        //return entityManager.createQuery("SELECT t FROM" + clazz.getName() + "WHERE t.");
-        return T
-    }
-
-    public void insertCrime(Crime crime){
-       // return
-    }
 }
