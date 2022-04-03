@@ -19,6 +19,7 @@ public class SistemaPolicialApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(SistemaPolicialApplication.class, args);
+		ConnectionPool.initPool();
 		var crimeDao = ConnectionPool.crimeDAO;
 
 		var arma = Arma.builder()
