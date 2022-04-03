@@ -15,7 +15,6 @@ public class Vitima {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @NonNull
     private Integer id;
 
     @Column
@@ -27,7 +26,6 @@ public class Vitima {
     private String nome;
 
     @Column(name = "data_nascimento")
-    @NonNull
     private LocalDate dataNascimento;
 
 }

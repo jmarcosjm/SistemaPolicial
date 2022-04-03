@@ -4,6 +4,7 @@ import com.gestao.sistemapolicial.enums.TipoArma;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Getter
 @Setter
@@ -11,9 +12,8 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Entity
 @Table(name = "tb_arma")
-public class Arma {
+public class Arma implements Serializable {
     @Id
-    @NonNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
@@ -26,6 +26,5 @@ public class Arma {
     private TipoArma tipoArma;
 
     @Column(name = "descricao")
-    @NonNull
     private String descricao;
 }

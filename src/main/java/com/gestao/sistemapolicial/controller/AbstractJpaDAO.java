@@ -26,6 +26,14 @@ public abstract class AbstractJpaDAO< T extends Serializable> {
                 .getResultList();
     }
 
+    public T findByCpf(String cpf){
+        String classname = clazz.getName();
+
+        return (T) entityManager.createQuery("from" + clazz.getName() + "where cpf = :cpf")
+                .setParameter("cpf", cpf)
+                .getSingleResult();
+    }
+
     public void create( T entity ){
         entityManager.persist( entity );
     }
