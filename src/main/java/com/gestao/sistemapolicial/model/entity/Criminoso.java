@@ -29,6 +29,7 @@ public class Criminoso implements Serializable {
     private String nome;
 
     @Column(name = "data_nascimento")
+    @NonNull
     private LocalDate dataNascimento;
 
     @Transient

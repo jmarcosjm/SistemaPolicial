@@ -1,7 +1,9 @@
 package com.gestao.sistemapolicial.controller;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
+
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 
@@ -9,11 +11,11 @@ public abstract class AbstractJpaDAO< T extends Serializable> {
 
     private Class< T > clazz;
 
-    @PersistenceContext
-    EntityManager entityManager;
+    private EntityManager entityManager;
 
-    public final void setClazz( Class< T > clazzToSet ){
+    public final void setClazz( Class< T > clazzToSet, EntityManager entityManager){
         this.clazz = clazzToSet;
+        this.entityManager = entityManager;
     }
 
     public T findOne( long id ){
@@ -28,14 +30,20 @@ public abstract class AbstractJpaDAO< T extends Serializable> {
 
     public T findByCpf(String cpf){
         String classname = clazz.getName();
+        try{
+            return (T) entityManager.createQuery("from " + clazz.getName() + " where cpf = :cpf")
+                    .setParameter("cpf", cpf)
+                    .getSingleResult();
+        }catch(Exception e){
+            return null;
+        }
 
-        return (T) entityManager.createQuery("from" + clazz.getName() + "where cpf = :cpf")
-                .setParameter("cpf", cpf)
-                .getSingleResult();
     }
 
     public void create( T entity ){
+        entityManager.getTransaction().begin();
         entityManager.persist( entity );
+        entityManager.getTransaction().commit();
     }
 
     public T update( T entity ){

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<persistence xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+
+             xsi:schemaLocation="http://java.sun.com/xml/ns/persistence
+ http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
+
+             version="2.0" xmlns="http://java.sun.com/xml/ns/persistence">
+
+    <persistence-unit name="crimedao" transaction-type="RESOURCE_LOCAL">
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <class>com.gestao.sistemapolicial.model.entity.Crime</class>
+        <class>com.gestao.sistemapolicial.model.entity.Criminoso</class>
+        <class>com.gestao.sistemapolicial.model.entity.Arma</class>
+        <class>com.gestao.sistemapolicial.model.entity.Vitima</class>
+        <properties>
+            <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" />
+            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://ec2-3-216-221-31.compute-1.amazonaws.com:5432/dcumt0our4s67m" />
+            <property name="javax.persistence.jdbc.user" value="lkqcjndnokjpyv" />
+            <property name="javax.persistence.jdbc.password" value="e344d77aa7f97a5f4fa7065ecb72217613fe3367d2e820f073008a7e4d6a607a" />
+        </properties>
+    </persistence-unit>
+
+
+</persistence>
