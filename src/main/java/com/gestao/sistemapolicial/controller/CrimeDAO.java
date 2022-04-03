@@ -33,11 +33,11 @@ public class CrimeDAO extends AbstractJpaDAO<Crime> {
 
         criminosos.forEach(criminoso -> {
             Criminoso criminosoReturn = criminosoDao.findByCpf(criminoso.getCpf());
-            criminosoReturn.setArmas(criminoso.getArmas());
-            criminosoReturn.setVitimas(criminoso.getVitimas());
             if(criminosoReturn == null){
                 listCriaCriminosos.add(criminoso);
             }else{
+                criminosoReturn.setArmas(criminoso.getArmas());
+                criminosoReturn.setVitimas(criminoso.getVitimas());
                 listCriminosos.add(criminosoReturn);
             }
         });
