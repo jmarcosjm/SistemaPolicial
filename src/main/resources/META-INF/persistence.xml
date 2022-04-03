@@ -7,7 +7,7 @@
 
              version="2.0" xmlns="http://java.sun.com/xml/ns/persistence">
 
-    <persistence-unit name="crimedao" transaction-type="RESOURCE_LOCAL">
+    <persistence-unit name="jpadao" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <class>com.gestao.sistemapolicial.model.entity.Crime</class>
         <class>com.gestao.sistemapolicial.model.entity.Criminoso</class>

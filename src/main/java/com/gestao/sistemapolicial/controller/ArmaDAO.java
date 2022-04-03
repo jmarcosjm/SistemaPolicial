@@ -13,7 +13,7 @@ public class ArmaDAO extends AbstractJpaDAO<Arma>{
     EntityManager entityManager;
 
     public ArmaDAO(){
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("armadao");
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("jpadao");
         entityManager = entityManagerFactory.createEntityManager();
         setClazz(Arma.class, entityManager);
     }
@@ -21,7 +21,7 @@ public class ArmaDAO extends AbstractJpaDAO<Arma>{
     public Arma findByNumRegistro(String numRegistro){
         try{
             return (Arma) entityManager.createQuery("from " + Arma.class.getName() + " where numero_registro = :numRegistro")
-                    .setParameter("numero_registro", numRegistro)
+                    .setParameter("numRegistro", numRegistro)
                     .getSingleResult();
         }catch(Exception e){
             return null;

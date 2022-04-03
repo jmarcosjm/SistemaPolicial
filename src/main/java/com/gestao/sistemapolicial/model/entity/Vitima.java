@@ -3,6 +3,7 @@ package com.gestao.sistemapolicial.model.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDate;
 
 @Getter
@@ -11,7 +12,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Entity
 @Table(name = "tb_vitima", schema = "sistema_policial")
-public class Vitima {
+public class Vitima implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

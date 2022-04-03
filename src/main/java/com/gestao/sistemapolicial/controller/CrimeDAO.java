@@ -20,7 +20,7 @@ public class CrimeDAO extends AbstractJpaDAO<Crime> {
     EntityManager entityManager;
 
     public CrimeDAO(){
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("crimedao");
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("jpadao");
         entityManager = entityManagerFactory.createEntityManager();
         setClazz(Crime.class, entityManager);
     }
