@@ -4,14 +4,16 @@ import com.gestao.sistemapolicial.model.VitimaCriminosoCrimeId;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
+@Builder
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-@Table(name = "tb_vitima_criminoso_crime")
-public class VitimaCriminosoCrime {
+@Table(name = "tb_vitima_criminoso_crime", schema = "sistema_policial")
+public class VitimaCriminosoCrime implements Serializable {
 
     @EmbeddedId
     @AttributeOverrides({

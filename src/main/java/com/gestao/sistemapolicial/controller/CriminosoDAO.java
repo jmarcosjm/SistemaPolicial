@@ -9,8 +9,6 @@ import javax.persistence.Persistence;
 
 public class CriminosoDAO extends AbstractJpaDAO<Criminoso>{
 
-
-
     public CriminosoDAO(EntityManager entityManager){
 
         setClazz(Criminoso.class, entityManager);

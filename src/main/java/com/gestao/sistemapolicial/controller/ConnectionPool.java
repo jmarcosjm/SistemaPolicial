@@ -9,7 +9,9 @@ public class ConnectionPool {
     public static CriminosoDAO criminosoDAO;
     public static VitimaDAO vitimaDAO;
     public static ArmaDAO armaDAO;
-
+    public static CriminosoCrimeDAO criminosoCrimeDAO;
+    public static ArmaCriminosoCrimeDAO armaCriminosoCrimeDAO;
+    public static VitimaCriminosoCrimeDAO vitimaCriminosoCrimeDAO;
 
     public static EntityManager entityManager;
 
@@ -20,7 +22,9 @@ public class ConnectionPool {
         ConnectionPool.criminosoDAO = new CriminosoDAO(entityManager);
         ConnectionPool.vitimaDAO = new VitimaDAO(entityManager);
         ConnectionPool.armaDAO = new ArmaDAO(entityManager);
-
+        ConnectionPool.criminosoCrimeDAO = new CriminosoCrimeDAO(entityManager);
+        ConnectionPool.armaCriminosoCrimeDAO = new ArmaCriminosoCrimeDAO(entityManager);
+        ConnectionPool.vitimaCriminosoCrimeDAO = new VitimaCriminosoCrimeDAO(entityManager);
     }
 
 }
