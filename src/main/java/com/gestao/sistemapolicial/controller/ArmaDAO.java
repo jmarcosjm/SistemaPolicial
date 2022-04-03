@@ -18,7 +18,7 @@ public class ArmaDAO extends AbstractJpaDAO<Arma>{
         setClazz(Arma.class, entityManager);
     }
 
-    public Arma findByNumRegistro(String numRegistro){
+    public Arma findByNumRegistro(Integer numRegistro){
         try{
             return (Arma) entityManager.createQuery("from " + Arma.class.getName() + " where numero_registro = :numRegistro")
                     .setParameter("numRegistro", numRegistro)

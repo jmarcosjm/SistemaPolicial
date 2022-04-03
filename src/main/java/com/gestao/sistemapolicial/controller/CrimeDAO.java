@@ -27,13 +27,13 @@ public class CrimeDAO extends AbstractJpaDAO<Crime> {
 
     public void principalFluxo(Crime crime){
         var criminosoDao = new CriminosoDAO();
+        var armaDao = new ArmaDAO();
+        var vitimaDao = new VitimaDAO();
+
         var criminosos = crime.getCriminosos();
         var listCriaCriminosos = new ArrayList<Criminoso>();
         var listCriminosos = new ArrayList<Criminoso>();
-        var listCriaArmas = new ArrayList<Arma>();
-        var listArmas = new ArrayList<Arma>();
-        var listCriaVitimas = new ArrayList<Vitima>();
-        var listVitimas = new ArrayList<Vitima>();
+
         criminosos.forEach(criminoso -> {
             Criminoso criminosoReturn = criminosoDao.findByCpf(criminoso.getCpf());
             if(criminosoReturn == null){
@@ -41,16 +41,69 @@ public class CrimeDAO extends AbstractJpaDAO<Crime> {
             }else{
                 listCriminosos.add(criminosoReturn);
             }
-            criminoso.getArmas().forEach(arma -> {
-
-            });
         });
         create(crime);
         for(Criminoso criminoso : listCriaCriminosos){
-            criminosoDao.create(criminoso);
-            listCriminosos.add(criminoso);
+            try{
+                criminosoDao.create(criminoso);
+                listCriminosos.add(criminoso);
+            }catch (Exception e){
+                System.out.println("Erro ao inserir");
+            }
+
         }
+
+        insereArmasVitimas(armaDao, vitimaDao, listCriminosos);
+
         crime.setCriminosos(listCriminosos);
+    }
+
+    private void insereArmasVitimas(ArmaDAO armaDao, VitimaDAO vitimaDao, ArrayList<Criminoso> listCriminosos) {
+        for(Criminoso criminoso : listCriminosos){
+            var listCriaArmas = new ArrayList<Arma>();
+            var listArmas = new ArrayList<Arma>();
+            var listCriaVitimas = new ArrayList<Vitima>();
+            var listVitimas = new ArrayList<Vitima>();
+
+            criminoso.getArmas().forEach(arma -> {
+                Arma armaReturn = armaDao.findByNumRegistro(arma.getNumeroRegistro());
+                if(armaReturn == null){
+                    listCriaArmas.add(arma);
+                }else{
+                    listArmas.add(arma);
+                }
+            });
+
+            criminoso.getVitimas().forEach(vitima -> {
+                Vitima vitimaReturn = vitimaDao.findByCpf(vitima.getCpf());
+                if(vitimaReturn == null){
+                    listCriaVitimas.add(vitima);
+                }else{
+                    listVitimas.add(vitima);
+                }
+            });
+
+            for(Arma arma : listCriaArmas){
+                try{
+                    armaDao.create(arma);
+                    listArmas.add(arma);
+                }catch (Exception e){
+                    System.out.println("Erro ao inserir");
+                }
+            }
+
+            for(Vitima vitima : listCriaVitimas){
+                try{
+                    vitimaDao.create(vitima);
+                    listVitimas.add(vitima);
+                }catch (Exception e){
+                    System.out.println("Erro ao inserir");
+                }
+            }
+            criminoso.setArmas(listArmas);
+            criminoso.setVitimas(listVitimas);
+
+        }
     }
 
 }
