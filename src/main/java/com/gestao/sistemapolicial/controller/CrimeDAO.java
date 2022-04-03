@@ -4,15 +4,12 @@ import com.gestao.sistemapolicial.model.entity.Arma;
 import com.gestao.sistemapolicial.model.entity.Crime;
 import com.gestao.sistemapolicial.model.entity.Criminoso;
 import com.gestao.sistemapolicial.model.entity.Vitima;
-import lombok.Builder;
-import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import java.util.ArrayList;
-
+import java.util.List;
 
 
 public class CrimeDAO extends AbstractJpaDAO<Crime> {
@@ -36,6 +33,8 @@ public class CrimeDAO extends AbstractJpaDAO<Crime> {
 
         criminosos.forEach(criminoso -> {
             Criminoso criminosoReturn = criminosoDao.findByCpf(criminoso.getCpf());
+            criminosoReturn.setArmas(criminoso.getArmas());
+            criminosoReturn.setVitimas(criminoso.getVitimas());
             if(criminosoReturn == null){
                 listCriaCriminosos.add(criminoso);
             }else{
@@ -58,30 +57,38 @@ public class CrimeDAO extends AbstractJpaDAO<Crime> {
         crime.setCriminosos(listCriminosos);
     }
 
-    private void insereArmasVitimas(ArmaDAO armaDao, VitimaDAO vitimaDao, ArrayList<Criminoso> listCriminosos) {
+    private void insereArmasVitimas(ArmaDAO armaDao, VitimaDAO vitimaDao, List<Criminoso> listCriminosos) {
         for(Criminoso criminoso : listCriminosos){
             var listCriaArmas = new ArrayList<Arma>();
             var listArmas = new ArrayList<Arma>();
             var listCriaVitimas = new ArrayList<Vitima>();
             var listVitimas = new ArrayList<Vitima>();
 
-            criminoso.getArmas().forEach(arma -> {
-                Arma armaReturn = armaDao.findByNumRegistro(arma.getNumeroRegistro());
-                if(armaReturn == null){
-                    listCriaArmas.add(arma);
-                }else{
-                    listArmas.add(arma);
-                }
-            });
+            if(criminoso.getArmas() != null && !criminoso.getArmas().isEmpty()) {
 
-            criminoso.getVitimas().forEach(vitima -> {
-                Vitima vitimaReturn = vitimaDao.findByCpf(vitima.getCpf());
-                if(vitimaReturn == null){
-                    listCriaVitimas.add(vitima);
-                }else{
-                    listVitimas.add(vitima);
-                }
-            });
+                criminoso.getArmas().forEach(arma -> {
+                    Arma armaReturn = armaDao.findByNumRegistro(arma.getNumeroRegistro());
+                    if (armaReturn == null) {
+                        listCriaArmas.add(arma);
+                    } else {
+                        listArmas.add(arma);
+                    }
+                });
+
+            }
+
+            if(criminoso.getVitimas() != null && !criminoso.getVitimas().isEmpty()) {
+
+                criminoso.getVitimas().forEach(vitima -> {
+                    Vitima vitimaReturn = vitimaDao.findByCpf(vitima.getCpf());
+                    if (vitimaReturn == null) {
+                        listCriaVitimas.add(vitima);
+                    } else {
+                        listVitimas.add(vitima);
+                    }
+                });
+
+            }
 
             for(Arma arma : listCriaArmas){
                 try{

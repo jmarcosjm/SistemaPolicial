@@ -1,8 +1,11 @@
 package com.gestao.sistemapolicial;
 
 import com.gestao.sistemapolicial.controller.CrimeDAO;
+import com.gestao.sistemapolicial.enums.TipoArma;
+import com.gestao.sistemapolicial.model.entity.Arma;
 import com.gestao.sistemapolicial.model.entity.Crime;
 import com.gestao.sistemapolicial.model.entity.Criminoso;
+import com.gestao.sistemapolicial.model.entity.Vitima;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -18,11 +21,60 @@ public class SistemaPolicialApplication {
 		SpringApplication.run(SistemaPolicialApplication.class, args);
 		var crimeDao = new CrimeDAO();
 
-		var criminoso = Criminoso.builder().nome("user1").dataNascimento(LocalDate.now()).cpf("999999").build();
-		var criminoso2 = Criminoso.builder().nome("user2").dataNascimento(LocalDate.now()).cpf("999998").build();
-		var criminoso3 = Criminoso.builder().nome("user3").dataNascimento(LocalDate.now()).cpf("9999997").build();
+		var arma = Arma.builder()
+				.numeroRegistro(113)
+				.descricao("arma top")
+				.tipoArma(TipoArma.FOGO)
+				.build();
 
-		var crime = Crime.builder().descricao("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").criminosos(Arrays.asList(criminoso, criminoso2, criminoso3)).build();
+		var arma1 = Arma.builder()
+				.numeroRegistro(124)
+				.descricao("arma top 11")
+				.tipoArma(TipoArma.FOGO)
+				.build();
+
+		var listArmas = new ArrayList<Arma>();
+
+		listArmas.add(arma);
+		listArmas.add(arma1);
+
+		var vitima1 = Vitima.builder()
+				.cpf("9992388321")
+				.nome("Pedro")
+				.dataNascimento(LocalDate.now())
+				.build();
+
+		var vitima2 = Vitima.builder()
+				.cpf("999238833")
+				.nome("Pedro")
+				.dataNascimento(LocalDate.now())
+				.build();
+
+		var listVitimas = new ArrayList<Vitima>();
+
+		listVitimas.add(vitima1);
+		listVitimas.add(vitima2);
+
+		var criminoso = Criminoso.builder()
+				.nome("Joao Marcos")
+				.dataNascimento(LocalDate.now())
+				.cpf("139923235")
+				.build();
+
+		var criminoso2 = Criminoso.builder()
+				.nome("Leo Pss")
+				.dataNascimento(LocalDate.now())
+				.armas(listArmas)
+				.vitimas(listVitimas)
+				.cpf("01001231295").build();
+
+		var criminoso3 = Criminoso.builder()
+				.nome("Vitor C")
+				.dataNascimento(LocalDate.now())
+				.vitimas(listVitimas)
+				.cpf("12389192445").build();
+
+		var crime = Crime.builder().descricao("crime o crime").criminosos(Arrays.asList(criminoso, criminoso2, criminoso3)).build();
 
 		crimeDao.principalFluxo(crime);
 	}

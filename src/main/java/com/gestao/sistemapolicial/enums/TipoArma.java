@@ -1,5 +1,7 @@
 package com.gestao.sistemapolicial.enums;
 
+import lombok.Builder;
+
 public enum TipoArma {
 
     BRANCA("BRANCA"),

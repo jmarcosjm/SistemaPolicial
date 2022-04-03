@@ -1,8 +1,5 @@
 package com.gestao.sistemapolicial.controller;
 
-import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;

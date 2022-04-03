@@ -6,12 +6,13 @@ import lombok.*;
 import javax.persistence.*;
 import java.io.Serializable;
 
+@Builder
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "tb_arma")
+@Table(name = "tb_arma", schema = "sistema_policial")
 public class Arma implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
