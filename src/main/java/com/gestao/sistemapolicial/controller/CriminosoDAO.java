@@ -9,11 +9,10 @@ import javax.persistence.Persistence;
 
 public class CriminosoDAO extends AbstractJpaDAO<Criminoso>{
 
-    EntityManager entityManager;
 
-    public CriminosoDAO(){
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("jpadao");
-        entityManager = entityManagerFactory.createEntityManager();
+
+    public CriminosoDAO(EntityManager entityManager){
+
         setClazz(Criminoso.class, entityManager);
     }
 

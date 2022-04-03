@@ -7,11 +7,9 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 public class VitimaDAO extends AbstractJpaDAO<Vitima> {
-    EntityManager entityManager;
 
-    VitimaDAO(){
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("jpadao");
-        entityManager = entityManagerFactory.createEntityManager();
+
+    VitimaDAO(EntityManager entityManager){
         setClazz(Vitima.class, entityManager);
     }
 }

@@ -1,6 +1,6 @@
 package com.gestao.sistemapolicial;
 
-import com.gestao.sistemapolicial.controller.CrimeDAO;
+import com.gestao.sistemapolicial.controller.ConnectionPool;
 import com.gestao.sistemapolicial.enums.TipoArma;
 import com.gestao.sistemapolicial.model.entity.Arma;
 import com.gestao.sistemapolicial.model.entity.Crime;
@@ -19,7 +19,7 @@ public class SistemaPolicialApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(SistemaPolicialApplication.class, args);
-		var crimeDao = new CrimeDAO();
+		var crimeDao = ConnectionPool.crimeDAO;
 
 		var arma = Arma.builder()
 				.numeroRegistro(113)

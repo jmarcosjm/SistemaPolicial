@@ -6,26 +6,21 @@ import com.gestao.sistemapolicial.model.entity.Criminoso;
 import com.gestao.sistemapolicial.model.entity.Vitima;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class CrimeDAO extends AbstractJpaDAO<Crime> {
 
-    EntityManager entityManager;
 
-    public CrimeDAO(){
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("jpadao");
-        entityManager = entityManagerFactory.createEntityManager();
+    public CrimeDAO(EntityManager entityManager){
         setClazz(Crime.class, entityManager);
     }
 
     public void principalFluxo(Crime crime){
-        var criminosoDao = new CriminosoDAO();
-        var armaDao = new ArmaDAO();
-        var vitimaDao = new VitimaDAO();
+        var criminosoDao = ConnectionPool.criminosoDAO;
+        var armaDao = ConnectionPool.armaDAO;
+        var vitimaDao = ConnectionPool.vitimaDAO;
 
         var criminosos = crime.getCriminosos();
         var listCriaCriminosos = new ArrayList<Criminoso>();

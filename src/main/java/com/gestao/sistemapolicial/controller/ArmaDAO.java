@@ -8,11 +8,8 @@ import javax.persistence.Persistence;
 
 public class ArmaDAO extends AbstractJpaDAO<Arma>{
 
-    EntityManager entityManager;
 
-    public ArmaDAO(){
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("jpadao");
-        entityManager = entityManagerFactory.createEntityManager();
+    public ArmaDAO(EntityManager entityManager){
         setClazz(Arma.class, entityManager);
     }
 

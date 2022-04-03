@@ -8,7 +8,7 @@ public abstract class AbstractJpaDAO< T extends Serializable> {
 
     private Class< T > clazz;
 
-    private EntityManager entityManager;
+    protected EntityManager entityManager;
 
     public final void setClazz( Class< T > clazzToSet, EntityManager entityManager){
         this.clazz = clazzToSet;
