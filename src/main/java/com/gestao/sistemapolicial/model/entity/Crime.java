@@ -27,4 +27,6 @@ public class Crime implements Serializable {
 
     @Transient
     private List<Criminoso> criminosos;
+
+    boolean isUpdate;
 }

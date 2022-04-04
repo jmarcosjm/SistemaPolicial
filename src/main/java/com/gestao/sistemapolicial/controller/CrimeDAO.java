@@ -40,7 +40,12 @@ public class CrimeDAO extends AbstractJpaDAO<Crime> {
                 listCriminosos.add(criminosoReturn);
             }
         });
-        create(crime);
+        if(crime.isUpdate()){
+            update(crime);
+        }else{
+            create(crime);
+        }
+
         for(Criminoso criminoso : listCriaCriminosos){
             try{
                 criminosoDao.create(criminoso);
