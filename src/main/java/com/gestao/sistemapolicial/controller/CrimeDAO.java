@@ -198,7 +198,6 @@ public class CrimeDAO extends AbstractJpaDAO<Crime> {
     }
 
 
-
     public Crime update(Integer id){
         var criminosoCrimeDAO = ConnectionPool.criminosoCrimeDAO;
         Crime crime = findOne(id);

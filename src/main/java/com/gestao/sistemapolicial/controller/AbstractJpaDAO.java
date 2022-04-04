@@ -43,7 +43,10 @@ public abstract class AbstractJpaDAO< T extends Serializable> {
     }
 
     public T update( T entity ){
-        return entityManager.merge( entity );
+        entityManager.getTransaction().begin();
+        T updated = entityManager.merge( entity );
+        entityManager.getTransaction().commit();
+        return updated;
     }
 
     public void delete( T entity ){

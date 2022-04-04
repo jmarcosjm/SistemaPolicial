@@ -1,9 +1,6 @@
 package com.gestao.sistemapolicial.controller;
 
-import com.gestao.sistemapolicial.model.ArmaCriminosoCrimeId;
 import com.gestao.sistemapolicial.model.VitimaCriminosoCrimeId;
-import com.gestao.sistemapolicial.model.entity.Arma;
-import com.gestao.sistemapolicial.model.entity.ArmaCriminosoCrime;
 import com.gestao.sistemapolicial.model.entity.CriminosoCrime;
 import com.gestao.sistemapolicial.model.entity.VitimaCriminosoCrime;
 
