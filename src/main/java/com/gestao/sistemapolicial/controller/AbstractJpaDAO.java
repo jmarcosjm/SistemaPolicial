@@ -15,12 +15,11 @@ public abstract class AbstractJpaDAO< T extends Serializable> {
         this.entityManager = entityManager;
     }
 
-    public T findOne( long id ){
+    public T findOne( Integer id ){
         return entityManager.find( clazz, id );
     }
     public List< T > findAll(){
         String className = clazz.getName();
-        
         return entityManager.createQuery( "from " + clazz.getName())
                 .getResultList();
     }
@@ -51,8 +50,10 @@ public abstract class AbstractJpaDAO< T extends Serializable> {
         entityManager.remove( entity );
     }
     
-    public void deleteById( long entityId ){
+    public void deleteById( Integer entityId ){
         T entity = findOne( entityId );
+        entityManager.getTransaction().begin();
         delete( entity );
+        entityManager.getTransaction().commit();
     }
 }

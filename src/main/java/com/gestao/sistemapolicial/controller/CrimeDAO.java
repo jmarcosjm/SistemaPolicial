@@ -133,15 +133,17 @@ public class CrimeDAO extends AbstractJpaDAO<Crime> {
         var listCriminoso = new ArrayList<Criminoso>();
 
         crime.getCriminosos().forEach(criminoso -> {
-            var criminosoCrime = CriminosoCrime.builder()
-                    .idCriminoso(criminoso.getId())
-                    .idCrime(crime.getId())
-                    .build();
 
+            var criminosoCrime = criminosoCrimeDAO.findByCrimeCriminoso(crime.getId(), criminoso.getId());
+
+            if(criminosoCrime == null){
+                criminosoCrime = CriminosoCrime.builder()
+                        .idCriminoso(criminoso.getId())
+                        .idCrime(crime.getId())
+                        .build();
+                criminosoCrimeDAO.create(criminosoCrime);
+            }
             listCriminoso.add(criminoso);
-
-            criminosoCrimeDAO.create(criminosoCrime);
-
             listCriminosoCrime.add(criminosoCrime);
         });
 
@@ -162,11 +164,14 @@ public class CrimeDAO extends AbstractJpaDAO<Crime> {
                             .idArma(armaId)
                             .build();
 
-                    var armaCriminosoCrime = ArmaCriminosoCrime.builder()
-                            .id(armaCriminosoCrimeId)
-                            .build();
+                    var armaCriminosoCrime = armaCriminosoCrimeDAO.findOne(armaCriminosoCrimeId);
+                    if(armaCriminosoCrime == null){
+                        ArmaCriminosoCrime.builder()
+                                .id(armaCriminosoCrimeId)
+                                .build();
+                        armaCriminosoCrimeDAO.create(armaCriminosoCrime);
+                    }
 
-                    armaCriminosoCrimeDAO.create(armaCriminosoCrime);
                 }
 
                 for (Integer vitimaId : listVitimas) {
@@ -176,15 +181,60 @@ public class CrimeDAO extends AbstractJpaDAO<Crime> {
                             .idVitima(vitimaId)
                             .build();
 
-                    var vitimaCriminosoCrime = VitimaCriminosoCrime.builder()
-                            .id(vitimaCriminosoCrimeId)
-                            .build();
+                    var vitimaCriminosoCrime = vitimaCriminosoCrimeDAO.findOne(vitimaCriminosoCrimeId);
 
-                    vitimaCriminosoCrimeDAO.create(vitimaCriminosoCrime);
+                    if(vitimaCriminosoCrime == null){
+                        vitimaCriminosoCrime = VitimaCriminosoCrime.builder()
+                                .id(vitimaCriminosoCrimeId)
+                                .build();
+
+                        vitimaCriminosoCrimeDAO.create(vitimaCriminosoCrime);
+                    }
+
                 }
             }
 
         });
+    }
+
+
+
+    public Crime update(Integer id){
+        var criminosoCrimeDAO = ConnectionPool.criminosoCrimeDAO;
+        Crime crime = findOne(id);
+        crime.setCriminosos(new ArrayList<>());
+        List<CriminosoCrime> criminosoCrimeList = criminosoCrimeDAO.findByCrime(id);
+
+        if(criminosoCrimeList != null){
+            var criminosoDAO = ConnectionPool.criminosoDAO;
+            var vitimaCriminosoCrimeDAO = ConnectionPool.vitimaCriminosoCrimeDAO;
+            var vitimaDAO = ConnectionPool.vitimaDAO;
+            var armaCriminosoCrimeDAO = ConnectionPool.armaCriminosoCrimeDAO;
+            var armaDAO = ConnectionPool.armaDAO;
+            criminosoCrimeList.forEach(criminosoCrime -> {
+                Criminoso criminoso = criminosoDAO.findOne(criminosoCrime.getIdCriminoso());
+
+                List<VitimaCriminosoCrime> vitimaCriminosoCrimeList = vitimaCriminosoCrimeDAO.findByCriminosoCrime(criminosoCrime);
+                if(vitimaCriminosoCrimeList != null){
+                    criminoso.setVitimas(new ArrayList<>());
+                    vitimaCriminosoCrimeList.forEach(vitimaCriminosoCrime -> {
+                        criminoso.getVitimas().add(vitimaDAO.findOne(vitimaCriminosoCrime.getId().getIdVitima()));
+                    });
+                }
+
+                List<ArmaCriminosoCrime> armaCriminosoCrimeList = armaCriminosoCrimeDAO.findByCriminosoCrime(criminosoCrime);
+                if(armaCriminosoCrimeList != null){
+                    criminoso.setArmas(new ArrayList<>());
+                    armaCriminosoCrimeList.forEach(armaCriminosoCrime -> {
+                        criminoso.getArmas().add(armaDAO.findOne(armaCriminosoCrime.getId().getIdArma()));
+                    });
+                }
+
+                crime.getCriminosos().add(criminoso);
+
+            });
+        }
+        return crime;
     }
 
 }

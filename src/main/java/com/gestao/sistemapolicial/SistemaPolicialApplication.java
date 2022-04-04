@@ -77,7 +77,9 @@ public class SistemaPolicialApplication {
 
 		var crime = Crime.builder().descricao("crime o crime").criminosos(Arrays.asList(criminoso, criminoso2, criminoso3)).build();
 
-		crimeDao.principalFluxo(crime);
+		//crimeDao.principalFluxo(crime);
+
+		ConnectionPool.criminosoDAO.deleteById(21);
 	}
 
 }
