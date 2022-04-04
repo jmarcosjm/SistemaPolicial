@@ -34,20 +34,34 @@ public class SistemaPolicialApplication {
 				.tipoArma(TipoArma.FOGO)
 				.build();
 
+		var arma2 = Arma.builder()
+				.numeroRegistro(992)
+				.descricao("facão")
+				.tipoArma(TipoArma.BRANCA)
+				.build();
+
+		var arma3 = Arma.builder()
+				.numeroRegistro(777)
+				.descricao("carambit")
+				.tipoArma(TipoArma.BRANCA)
+				.build();
+
 		var listArmas = new ArrayList<Arma>();
 
 		listArmas.add(arma);
 		listArmas.add(arma1);
+		listArmas.add(arma2);
+		listArmas.add(arma3);
 
 		var vitima1 = Vitima.builder()
-				.cpf("9992388321")
-				.nome("Pedro")
+				.cpf("99923123")
+				.nome("Bonfim")
 				.dataNascimento(LocalDate.now())
 				.build();
 
 		var vitima2 = Vitima.builder()
-				.cpf("999238833")
-				.nome("Pedro")
+				.cpf("93883311")
+				.nome("Vitin")
 				.dataNascimento(LocalDate.now())
 				.build();
 
@@ -57,29 +71,35 @@ public class SistemaPolicialApplication {
 		listVitimas.add(vitima2);
 
 		var criminoso = Criminoso.builder()
-				.nome("Joao Marcos")
+				.nome("JJ")
 				.dataNascimento(LocalDate.now())
-				.cpf("139923235")
+				.cpf("00022")
 				.build();
 
 		var criminoso2 = Criminoso.builder()
-				.nome("Leo Pss")
+				.id(14)
+				.nome("Otamendi")
 				.dataNascimento(LocalDate.now())
 				.armas(listArmas)
 				.vitimas(listVitimas)
-				.cpf("01001231295").build();
+				.cpf("3999123122").build();
 
 		var criminoso3 = Criminoso.builder()
-				.nome("Vitor C")
+				.nome("Ruan")
 				.dataNascimento(LocalDate.now())
 				.vitimas(listVitimas)
-				.cpf("12389192445").build();
+				.cpf("999128").build();
 
-		var crime = Crime.builder().descricao("crime o crime").criminosos(Arrays.asList(criminoso, criminoso2, criminoso3)).build();
+		var crime = Crime.builder().id(24).descricao("crime atualizado").criminosos(Arrays.asList(criminoso, criminoso2, criminoso3)).build();
 
-		//crimeDao.principalFluxo(crime);
+		var crime24 = crimeDao.update(24);
 
-		ConnectionPool.criminosoDAO.deleteById(21);
+		crime24.setDescricao("crime atualizado");
+		var list = crime24.getCriminosos();
+		list.add(criminoso2);
+		crime24.setUpdate(true);
+
+		crimeDao.principalFluxo(crime24);
 	}
 
 }
